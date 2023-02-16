@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   textfield_input: {
       color: '#c5cae9 !important',
   }
+  
 }));
 
 const MessageBlock = ({
@@ -78,11 +79,38 @@ const MessageBlock = ({
     className
   );
 
+  const innerClasses = classNames(
+    'cta-message section-inner',
+    topDivider && 'has-top-divider',
+    bottomDivider && 'has-bottom-divider',
+  );  
+
   return (
     <>
+    
     <section {...props} className={outerClasses} >
-      
-      
+    
+    <div className="container">
+        <div className={innerClasses}>
+              Martino Pedalo  
+        </div>
+    </div>
+    <div> ---- </div>
+    <div className="container">
+        <div className={innerClasses}>
+              message zone
+        </div>
+    </div>
+    <div> ---- </div>
+    <div className="container">
+        <div className={innerClasses}>
+        <button> file </button>
+        <input placeholder='Chat with your sidekick here ...'></input>
+        <button> send </button>
+        </div>
+        
+    </div>
+        
     </section>
     </>
   );

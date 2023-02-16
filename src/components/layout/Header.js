@@ -183,6 +183,9 @@ const Header = ({
                     <li>
                       <Link to="/profile" onClick={closeMenu}>Profile</Link>
                     </li>
+                    <li>
+                      <Link to="/message" onClick={closeMenu}>Message</Link>
+                    </li>
                   </ul>
                   
                   {!hideNav &&
