@@ -13,6 +13,7 @@ import Signup from './views/Signup';
 import Login from './views/Login'
 import Chatbot from './views/Chatbot'
 import Profile from './views/Profile'
+import Message from './views/Message'
 
 // Initialize Google Analytics
 ReactGA.initialize(process.env.REACT_APP_GA_CODE);
@@ -43,6 +44,7 @@ const App = () => {
           <AppRoute exact path="/login" component={Login} layout={LayoutDefault} />
           <AppRoute exact path="/signup" component={Signup} layout={LayoutDefault} />
           <AppRoute exact path="/profile" component={Profile} layout={LayoutDefault} />
+          <AppRoute exact path="/message" component={Message} layout={LayoutDefault} />
         </Switch>
         
       )} />
