@@ -4,7 +4,7 @@ import Button from '../elements/Button';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles'
 import { makeStyles } from "@mui/styles";
-import { auth, logInWithEmailAndPassword, registerWithEmailAndPassword, connectWithGoogle } from '../../firebase'
+import { auth, registerWithEmailAndPassword, connectWithGoogle } from '../../firebase'
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from 'react-router-dom';

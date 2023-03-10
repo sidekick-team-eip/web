@@ -61,7 +61,6 @@ const user_status = auth.getUserStatus;
   export {
     auth,
     db,
-    logInWithEmailAndPassword,
     registerWithEmailAndPassword,
     connectWithGoogle,
     logout,

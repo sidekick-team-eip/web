@@ -5,10 +5,11 @@ import Image from '../elements/Image';
 import TextField from '@mui/material/TextField';
 import { alpha, styled } from '@mui/material/styles'
 import { makeStyles } from "@mui/styles";
-import { auth, logInWithEmailAndPassword, connectWithGoogle, db } from '../../firebase'
+import { auth, connectWithGoogle, db } from '../../firebase'
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
+
 
 //profile pictures
 import pp_1 from './../../assets/images/profile_pictures/AI_pp_1.jpeg';

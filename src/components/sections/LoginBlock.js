@@ -9,10 +9,12 @@ import Modal from '../elements/Modal';
 import TextField from '@mui/material/TextField';
 import { alpha, styled } from '@mui/material/styles'
 import { makeStyles } from "@mui/styles";
-import { auth, logInWithEmailAndPassword, connectWithGoogle } from '../../firebase'
+import { auth, connectWithGoogle } from '../../firebase'
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
+
+import {logInWithEmailAndPassword} from '../../request'
 
 
 

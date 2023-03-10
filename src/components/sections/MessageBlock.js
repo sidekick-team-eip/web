@@ -10,6 +10,8 @@ import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
 
+import pp_1 from './../../assets/images/profile_pictures/AI_pp_6.jpeg';
+
 import {
   doc,
   updateDoc,
@@ -56,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
+
 const MessageBlock = ({
   className,
   topOuterDivider,
@@ -69,7 +72,12 @@ const MessageBlock = ({
 
   const [user, error] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
+  const [Text, setText] = useState('');
+  const [Input, setInput] = useState('');
   const history = useHistory();
+
+  const Sidekick_name = "Martino Pedalo"
+  const last_seen = "1 day"
 
   const outerClasses = classNames(
     'hero section center-content',
@@ -83,32 +91,60 @@ const MessageBlock = ({
     'cta-message section-inner',
     topDivider && 'has-top-divider',
     bottomDivider && 'has-bottom-divider',
-  );  
+  );
+
+
+  const showMes = e => {
+    e.preventDefault();
+    setInput(Input + '    ' + Text);
+  };
 
   return (
     <>
-    
     <section {...props} className={outerClasses} >
     
     <div className="container">
         <div className={innerClasses}>
-              Martino Pedalo  
+            <tr>
+                <td></td>
+                <td align="left"><div><Image alt="profile_picture" width={80} height={80} className="profile_picture_main" rounded="true" src={pp_1}/></div></td>
+                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                <td align="center"><div><h3>{Sidekick_name}</h3></div></td>
+                <td></td><td></td><td></td><td></td><td></td>
+                <td align="right"><div><p>last seen {last_seen} ago</p> </div></td>
+                <td></td>   
+            </tr>
         </div>
     </div>
     <div> ---- </div>
+
     <div className="container">
         <div className={innerClasses}>
-              message zone
-        </div>
+            <div id="send_message_zone">
+            <p>message zone</p>
+            </div>
+            {Input !== '' && Input}
+            </div>
+            
     </div>
-    <div> ---- </div>
+
     <div className="container">
         <div className={innerClasses}>
-        <button> file </button>
-        <input placeholder='Chat with your sidekick here ...'></input>
-        <button> send </button>
+
+            
+                <div className="Main">
+                    <form onSubmit={showMes}>
+                        <input
+                        type="text"
+                        className="CurrencyName"
+                        value={Text}
+                        onChange={e => setText(e.target.value)}
+                        />
+                        <button style={{ marginLeft: '5px' }} type="submit"> Send ! </button>
+                    </form>
+                    
+                </div>
         </div>
-        
     </div>
         
     </section>
