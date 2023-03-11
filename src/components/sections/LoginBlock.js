@@ -66,13 +66,14 @@ const LoginBlock = ({
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const history = useHistory();
+  
   useEffect(() => {
+    if (localStorage.getItem("token")) {
+      history.push("/");
+    }
     if (loading) {
       // maybe trigger a loading screen
       return;
-    }
-    if (user) {
-      history.push("/");
     }
   }, [user, loading]);
   const [videoModalActive, setVideomodalactive] = useState(false);
@@ -101,6 +102,11 @@ const LoginBlock = ({
     topDivider && 'has-top-divider',
     bottomDivider && 'has-bottom-divider'
   );
+
+  const handleLoginWithEmail = () => {
+    logInWithEmailAndPassword(email, password);
+    window.location.reload();
+  }
 
   return (
     <section
@@ -139,7 +145,8 @@ const LoginBlock = ({
               color="mobile"
               wideMobile
               value={password}
-              onClick={() => logInWithEmailAndPassword(email, password)}> Connnect !</Button>
+              onClick={handleLoginWithEmail}
+                > Connnect !</Button>
               </div>
               <div style={{margin:20}}>
               <Button

@@ -56,12 +56,12 @@ const user_status = auth.getUserStatus;
 
   const logout = () => {
     signOut(auth);
+    localStorage.clear();
   };
 
   export {
     auth,
     db,
-    registerWithEmailAndPassword,
     connectWithGoogle,
     logout,
   };

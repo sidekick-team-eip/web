@@ -104,7 +104,7 @@ const Header = ({
             bottomDivider && 'has-bottom-divider'
           )}>
           <Logo />
-          {!user &&
+          {!localStorage.getItem('token') &&
             <>
               <button
                 ref={hamburger}
@@ -153,7 +153,7 @@ const Header = ({
                 </div>
               </nav>
             </>}
-          {user &&
+          {localStorage.getItem('token') &&
           <>
           <>
               <button
@@ -174,7 +174,7 @@ const Header = ({
                     isActive && 'is-active'
                   )}>
                 <div className="header-nav-inner">
-                User : {user?.email}
+                User : {localStorage.getItem('email')}
                   <ul className={
                     classNames(
                       'list-reset text-xs',

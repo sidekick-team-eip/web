@@ -4,11 +4,14 @@ import Button from '../elements/Button';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles'
 import { makeStyles } from "@mui/styles";
-import { auth, registerWithEmailAndPassword, connectWithGoogle } from '../../firebase'
+import { auth, connectWithGoogle } from '../../firebase'
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+
+
+import {registerWithEmailAndPassword} from '../../request'
 
 const propTypes = {
   ...SectionProps.types
@@ -60,19 +63,20 @@ const SignupBlock = ({
   const [name, setName] = useState("");
 
   const history = useHistory();
+
   useEffect(() => {
+    if (localStorage.getItem("token")) {
+      history.push("/");
+    }
     if (loading) {
       return;
-    }
-    if (user) {
-      history.push("/");
     }
   }, [user, loading]);
   const [videoModalActive, setVideomodalactive] = useState(false);
 
   const register = async () => {
     if (!name) alert("Please enter name");
-    registerWithEmailAndPassword(name, email, password);
+    registerWithEmailAndPassword(email, password);
     try {
       await axios.post('http://localhost:5000' + '/user/mail', {
         email,
@@ -97,6 +101,7 @@ const SignupBlock = ({
     e.preventDefault();
     setVideomodalactive(false);
   }
+
   const classes = useStyles();
 
   const outerClasses = classNames(
