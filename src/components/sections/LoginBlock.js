@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
 
-import {logInWithEmailAndPassword} from '../../request'
+import {logInWithEmailAndPassword, fetchprofile} from '../../request'
 
 
 
@@ -105,7 +105,6 @@ const LoginBlock = ({
 
   const handleLoginWithEmail = () => {
     logInWithEmailAndPassword(email, password);
-    window.location.reload();
   }
 
   return (

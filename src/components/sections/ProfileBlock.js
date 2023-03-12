@@ -13,33 +13,16 @@ import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
 
 //profile pictures
 import pp_1 from './../../assets/images/profile_pictures/AI_pp_1.jpeg';
-import pp_2 from './../../assets/images/profile_pictures/AI_pp_2.jpeg';
-import pp_3 from './../../assets/images/profile_pictures/AI_pp_3.jpeg';
-import pp_4 from './../../assets/images/profile_pictures/AI_pp_4.jpeg';
-import pp_5 from './../../assets/images/profile_pictures/AI_pp_5.jpeg';
-import pp_6 from './../../assets/images/profile_pictures/AI_pp_6.jpeg';
-import pp_7 from './../../assets/images/profile_pictures/AI_pp_7.jpeg';
-import pp_8 from './../../assets/images/profile_pictures/AI_pp_8.jpg';
-import pp_9 from './../../assets/images/profile_pictures/AI_pp_9.jpeg';
-import pp_10 from './../../assets/images/profile_pictures/AI_pp_10.jpeg';
-import pp_11 from './../../assets/images/profile_pictures/AI_pp_11.png';
-import pp_12 from './../../assets/images/profile_pictures/AI_pp_12.jpeg';
 
 // firebase firestore.
 import {
   doc,
-  onSnapshot,
   updateDoc,
-  setDoc,
-  deleteDoc,
   addDoc,
   collection,
-  serverTimestamp,
   getDocs,
   query,
   where,
-  orderBy,
-  limit,
 } from 'firebase/firestore';
 
 const AuthContext = React.createContext();
@@ -91,7 +74,7 @@ const ProfileBlock = ({
 }) => {
 
   const [user, error] = useAuthState(auth);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const [user_profile, setUserProfile] = useState([]);
   const profile_data = [];
@@ -107,42 +90,6 @@ const ProfileBlock = ({
   const [tmpfunF_data, settmpFunF] = useState();
   const [tmpobjectives_data, settmpObjectives] = useState();
   const [tmpfavorite_data, settmpFavorite] = useState();
-
-  const fetchprofile = async () => {
-    try {
-      const colletionRef = collection(db, 'user_profile');
-      const q = query(colletionRef, where("username", "==", user.email));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        profile_data.push(doc.data());
-        profile_data.push(doc._key.path.segments[6]);
-      });
-
-      if (profile_data[0]) {
-        setBioData(profile_data[0].bio);
-        setFavorite(profile_data[0].favorite_sport);
-        setFunF(profile_data[0].fun_fact);
-        setObjectives(profile_data[0].objectives);
-        setUsername(profile_data[0].username);
-
-        settmpBioData(profile_data[0].bio);
-        settmpFavorite(profile_data[0].favorite_sport);
-        settmpFunF(profile_data[0].fun_fact);
-        settmpObjectives(profile_data[0].objectives);
-        settmpUsername(profile_data[0].username);
-
-        console.log("profile data : ", profile_data[1]);
-        }
-      if (!bio_data) {
-        add_user_profile();
-      }
-    } 
-    catch (e) {
-      console.log("Error fetching profile: ", e);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const edit_user_profile = async () => {
     const profile_data_2 = [];
@@ -185,27 +132,9 @@ const ProfileBlock = ({
     }
   }
 
-  const add_user_profile = async () => {
-    try {
-    const docRef = await addDoc(collection(db, "user_profile"), {
-      username: user.email,
-      bio: "life is sweeter in thailand",
-      fun_fact: 'avocados are fruits !',
-      objectives: "runing a 11.5 second sprint",
-      favorite_sport: "100 m sprint, cricket"
-    });
-    console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-    console.error("Error adding document: ", e);
-    }
-  }
-
 
   useEffect(() => {
-    if (loading) {
-      fetchprofile();
-    }
-    if (!user) {
+    if (!localStorage.getItem("token")) {
       history.push("/login");
     }
   }, [user, loading]);
@@ -254,7 +183,7 @@ const ProfileBlock = ({
             <input 
             className="text-sm mb-0" 
             type="text" 
-            value={tmpbio_data}
+            value={localStorage.getItem("username")}
             onChange={(e) => {
               settmpBioData(
                   e.target.value)
@@ -269,7 +198,7 @@ const ProfileBlock = ({
                   <input 
                   className="text-sm mb-0" 
                   type="text" 
-                  value={tmpfavorite_data}
+                  value={localStorage.getItem("sport_frequence")}
                   onChange={(e) => {
                     settmpFavorite(
                         e.target.value)
@@ -277,7 +206,7 @@ const ProfileBlock = ({
                   />
                 </div>
                 <div className="testimonial-item-footer text-xs mt-32 mb-0 has-top-divider">
-                  <span className="testimonial-item-name text-color-high">Favorite sports</span>
+                  <span className="testimonial-item-name text-color-high">Sport Frequency</span>
                 </div>
               </div>
             </div>
@@ -289,7 +218,7 @@ const ProfileBlock = ({
                   <input 
                   className="text-sm mb-0" 
                   type="text" 
-                  value={tmpobjectives_data}
+                  value={localStorage.getItem("description")}
                   onChange={(e) => {
                     settmpObjectives(
                         e.target.value)
@@ -298,7 +227,7 @@ const ProfileBlock = ({
                 </div>
                 <div className="testimonial-item-footer text-xs mt-32 mb-0 has-top-divider">
                   <span className="testimonial-item-link">
-                    <a>Personnal objectives</a>
+                    <a>Description</a>
                   </span>
                 </div>
               </div>
@@ -311,7 +240,7 @@ const ProfileBlock = ({
                   <input 
                   className="text-sm mb-0" 
                   type="text" 
-                  value={tmpfunF_data}
+                  value={localStorage.getItem("weight")}
                   onChange={(e) => {
                     settmpFunF(
                         e.target.value)
@@ -319,7 +248,7 @@ const ProfileBlock = ({
                   />
                 </div>
                 <div className="testimonial-item-footer text-xs mt-32 mb-0 has-top-divider">
-                  <span className="testimonial-item-name text-color-high">A fun fact</span>
+                  <span className="testimonial-item-name text-color-high">Weight</span>
                 </div>
               </div>
             </div>

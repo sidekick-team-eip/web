@@ -21,10 +21,50 @@ const logInWithEmailAndPassword = async (email, password) => {
             console.log(result);
             localStorage.setItem("token", JSON.parse(result).access_token);
             localStorage.setItem("email", email);
+            fetchprofile();
         })
     } catch (err) {
         console.log(err)
     }
+  };
+
+  const fetchprofile = async () => {
+    if (!localStorage.getItem("token")) {
+        console.log("no token in local storage");
+        return (null)
+      }
+  
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
+  
+      console.log("bear" + localStorage.getItem("token"), myHeaders);
+  
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };  
+      try {
+  
+      fetch("http://13.39.85.8/user_infos/getUserInfos", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+          localStorage.setItem("userId", JSON.parse(result).userId);
+          localStorage.setItem("birthDate", JSON.parse(result).birthDate);
+          localStorage.setItem("username", JSON.parse(result).username);
+          localStorage.setItem("firstname", JSON.parse(result).firstname);
+          localStorage.setItem("lastname", JSON.parse(result).lastname);
+          localStorage.setItem("size", JSON.parse(result).size);
+          localStorage.setItem("weight", JSON.parse(result).weight);
+          localStorage.setItem("gender", JSON.parse(result).gender);
+          localStorage.setItem("description", JSON.parse(result).description);
+          localStorage.setItem("sport_frequence", JSON.parse(result).sport_frequence);
+          console.log(result)
+        })
+      } 
+      catch (e) {
+        console.log("Error fetching profile. request.js");
+      }
   };
 
 const connectWithGoogle = () => {
@@ -69,5 +109,6 @@ const logout = () => {
 
 export {
     logInWithEmailAndPassword,
-    registerWithEmailAndPassword
+    registerWithEmailAndPassword,
+    fetchprofile
   };
