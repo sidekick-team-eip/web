@@ -22,6 +22,8 @@ const logInWithEmailAndPassword = async (email, password) => {
             localStorage.setItem("token", JSON.parse(result).access_token);
             localStorage.setItem("email", email);
             fetchprofile();
+            fetchMessages();
+            getSidekickInfos();
         })
     } catch (err) {
         console.log(err)
@@ -133,6 +135,50 @@ const editProfile = (usernameChange, frequecyChange, descriptionChange, weightCh
     .catch(error => console.log('error', error));
 }
 
+const fetchMessages = () => {
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  try {
+  fetch("http://13.39.85.8/messages/getMessages", requestOptions)
+    .then(response => response.text())
+    .then(result => {
+      console.log("RESULT set localstorage", JSON.parse(result));
+      localStorage.setItem("messages", JSON.stringify(JSON.parse(result)));
+    })
+  }
+  catch (error) {
+    console.log('fetch messages error : ', error);
+  }
+}
+
+const getSidekickInfos = () => {
+
+  try {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
+    var requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+    
+    fetch("http://13.39.85.8/user_infos/getSidekickInfos", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(result)
+        localStorage.setItem("sidekick_name", JSON.parse(result).firstname + " " + JSON.parse(result).lastname);
+        localStorage.setItem("sidekick_frequency", JSON.parse(result).frequence_sportive);
+        localStorage.setItem("sidekick_bio", JSON.parse(result).bio);
+      })
+  }
+  catch (error) {
+    console.log('get infos sidekick error : ', error);
+  }
+}
+
 const logout = () => {
     localStorage.clear();
   };
@@ -141,5 +187,6 @@ export {
     logInWithEmailAndPassword,
     registerWithEmailAndPassword,
     fetchprofile,
-    logout
+    logout,
+    fetchMessages
   };
