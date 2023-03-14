@@ -140,5 +140,6 @@ const logout = () => {
 export {
     logInWithEmailAndPassword,
     registerWithEmailAndPassword,
-    fetchprofile
+    fetchprofile,
+    logout
   };

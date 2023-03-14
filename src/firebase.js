@@ -63,5 +63,4 @@ const user_status = auth.getUserStatus;
     auth,
     db,
     connectWithGoogle,
-    logout,
   };

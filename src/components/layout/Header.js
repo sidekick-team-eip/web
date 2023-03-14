@@ -7,7 +7,8 @@ import Logo from './partials/Logo';
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { auth, db, logout } from "../../firebase";
+import { auth, db } from "../../firebase";
+import { logout } from "../../request";
 import { query, collection, getDocs, where } from "firebase/firestore";
 
 
