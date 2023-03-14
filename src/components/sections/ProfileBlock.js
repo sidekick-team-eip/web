@@ -76,60 +76,57 @@ const ProfileBlock = ({
   const [user, error] = useAuthState(auth);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const [user_profile, setUserProfile] = useState([]);
-  const profile_data = [];
 
-  const [username_data, setUsername] = useState();
-  const [bio_data, setBioData] = useState();
-  const [funF_data, setFunF] = useState();
-  const [objectives_data, setObjectives] = useState();
-  const [favorite_data, setFavorite] = useState();
-
-  const [tmpusername_data, settmpUsername] = useState();
-  const [tmpbio_data, settmpBioData] = useState();
-  const [tmpfunF_data, settmpFunF] = useState();
-  const [tmpobjectives_data, settmpObjectives] = useState();
-  const [tmpfavorite_data, settmpFavorite] = useState();
+  const [UsernameData, setUsernameData] = useState();
+  const [BioData, setBioData] = useState();
+  const [FrequencyData, setFrequencyData] = useState();
+  const [WeightData, setWeightData] = useState();
 
   const edit_user_profile = async () => {
-    const profile_data_2 = [];
-    console.log("HERE i am");
-    try {
+    console.log(UsernameData);
+    console.log(BioData);
+    console.log(FrequencyData);
+    console.log(WeightData);
+
+    return (null)
+    // const profile_data_2 = [];
+    // console.log("HERE i am");
+    // try {
       
-      const colletionRef = collection(db, 'user_profile');
-      const q = query(colletionRef, where("username", "==", "pierrebittou@gmail.com"));
-      const querySnapshot = await getDocs(q);
+    //   const colletionRef = collection(db, 'user_profile');
+    //   const q = query(colletionRef, where("username", "==", "pierrebittou@gmail.com"));
+    //   const querySnapshot = await getDocs(q);
       
-      querySnapshot.forEach((doc) => {
-        profile_data_2.push(doc.data());
-        profile_data_2.push(doc._key.path.segments[6]);
-      });
+    //   querySnapshot.forEach((doc) => {
+    //     profile_data_2.push(doc.data());
+    //     profile_data_2.push(doc._key.path.segments[6]);
+    //   });
 
-      console.log("HERE i am 5555");
-      console.log(profile_data_2[1]);
+    //   console.log("HERE i am 5555");
+    //   console.log(profile_data_2[1]);
 
-      if (profile_data_2 && profile_data_2[1]) {
-        console.log("HERE i am v2");
-      const docRef = doc(db, "user_profile", profile_data_2[1]);
-      const data = {
-      username: user.email,
-      bio: tmpbio_data,
-      fun_fact: tmpfunF_data,
-      objectives: tmpobjectives_data,
-      favorite_sport: tmpfavorite_data
-      };
-      updateDoc(docRef, data)
-      .then(docRef => {
-      console.log("Document written with ID: ", docRef.id);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    }
+    //   if (profile_data_2 && profile_data_2[1]) {
+    //     console.log("HERE i am v2");
+    //   const docRef = doc(db, "user_profile", profile_data_2[1]);
+    //   const data = {
+    //   username: user.email,
+    //   bio: tmpbio_data,
+    //   fun_fact: FrequencyData,
+    //   objectives: tmpobjectives_data,
+    //   favorite_sport: tmpfavorite_data
+    //   };
+    //   updateDoc(docRef, data)
+    //   .then(docRef => {
+    //   console.log("Document written with ID: ", docRef.id);
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   })
+    // }
 
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
+    // } catch (e) {
+    //   console.error("Error adding document: ", e);
+    // }
   }
 
 
@@ -137,8 +134,24 @@ const ProfileBlock = ({
     if (!localStorage.getItem("token")) {
       history.push("/login");
     }
+    // if (!UsernameData){
+    //   setUsernameData(localStorage.getItem("username"));
+    // }
+    
+    // if (!BioData){
+    //   setBioData(BioData = localStorage.getItem("username"));
+    // }
+    
+    // if (!FrequencyData) {
+    //   setFrequencyData(localStorage.getItem("username"));
+    // }
+    
+    // if (!WeightData)
+    // {
+    //   setWeightData(localStorage.getItem("weight"));
+    // }
   }, [user, loading]);
-  const [videoModalActive, setVideomodalactive] = useState(false);
+  //const [videoModalActive, setVideomodalactive] = useState(false);
 
   const outerClasses = classNames(
     'hero section center-content',
@@ -160,8 +173,7 @@ const ProfileBlock = ({
   );
 
   const sectionHeader = {
-    title: username_data,
-    paragraph: bio_data,
+    title: localStorage.getItem("email")
   };
 
   return (
@@ -185,7 +197,7 @@ const ProfileBlock = ({
             type="text" 
             value={localStorage.getItem("username")}
             onChange={(e) => {
-              settmpBioData(
+              setUsernameData(
                   e.target.value)
             }}/>
           </div>
@@ -194,13 +206,12 @@ const ProfileBlock = ({
             <div className="tiles-item">
               <div className="tiles-item-inner">
                 <div className="testimonial-item-content">
-                  <p className="text-sm mb-0"> {favorite_data} </p>
                   <input 
                   className="text-sm mb-0" 
                   type="text" 
                   value={localStorage.getItem("sport_frequence")}
                   onChange={(e) => {
-                    settmpFavorite(
+                    setFrequencyData(
                         e.target.value)
                   }}
                   />
@@ -214,13 +225,12 @@ const ProfileBlock = ({
             <div className="tiles-item">
               <div className="tiles-item-inner">
                 <div className="testimonial-item-content">
-                  <p className="text-sm mb-0"> {objectives_data} </p>
                   <input 
                   className="text-sm mb-0" 
                   type="text" 
                   value={localStorage.getItem("description")}
                   onChange={(e) => {
-                    settmpObjectives(
+                    setBioData(
                         e.target.value)
                   }}
                   />
@@ -236,13 +246,12 @@ const ProfileBlock = ({
             <div className="tiles-item">
               <div className="tiles-item-inner">
                 <div className="testimonial-item-content">
-                <p className="text-sm mb-0"> {funF_data} </p>
                   <input 
                   className="text-sm mb-0" 
                   type="text" 
                   value={localStorage.getItem("weight")}
                   onChange={(e) => {
-                    settmpFunF(
+                    setWeightData(
                         e.target.value)
                   }}
                   />

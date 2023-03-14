@@ -103,6 +103,36 @@ const registerWithEmailAndPassword = async (email, password) => {
     }
   };
 
+const editProfile = (usernameChange, frequecyChange, descriptionChange, weightChange) => {
+    var myHeaders = new Headers();
+    myHeaders.append("content-type", "application/json");
+    myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
+
+    var raw = JSON.stringify({
+        "firstname": "Admin",
+        "lastname": "Super",
+        "size": "180",
+        "weight": "80",
+        "birthDate": "2001-03-10",
+        "username": "SuperAdmin",
+        "gender": "MALE",
+        "description": "AdminSuper esta enervados",
+        "sport_frequence": "NEVER"
+    });
+
+    var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+    };
+
+    fetch("http://13.39.85.8/user_infos/setUserInfos", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+}
+
 const logout = () => {
     localStorage.clear();
   };
