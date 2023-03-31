@@ -10,10 +10,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
 
 import pp_1 from './../../assets/images/profile_pictures/AI_pp_6.jpeg';
-
-
 import { auth, db } from '../../firebase'
 import './../../assets/scss/speech_bubble.scss'
+
+import { socket } from '../../socket';
+
 
 
 const propTypes = {

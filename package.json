@@ -24,6 +24,7 @@
     "react-scripts": "^3.4.1",
     "react-simple-chatbot": "^0.6.1",
     "sass": "^1.49.7",
+    "socket.io-client": "^4.6.0",
     "styled-components": "^5.3.6"
   },
   "repository": {
