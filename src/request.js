@@ -48,7 +48,7 @@ const logInWithEmailAndPassword = async (email, password) => {
       };  
       try {
   
-      fetch("http://13.39.85.8/user_infos/getUserInfos", requestOptions)
+      fetch("http://13.39.85.8/user_infos/", requestOptions)
         .then(response => response.text())
         .then(result => {
           localStorage.setItem("userId", JSON.parse(result).userId);
@@ -129,7 +129,7 @@ const editProfile = (usernameChange, frequecyChange, descriptionChange, weightCh
     redirect: 'follow'
     };
 
-    fetch("http://13.39.85.8/user_infos/setUserInfos", requestOptions)
+    fetch("http://13.39.85.8/user_infos/", requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -181,12 +181,42 @@ const getSidekickInfos = () => {
 
 const logout = () => {
     localStorage.clear();
-  };
+};
+
+const resetPassword = async (email, password, confirmPassword, code) => {
+  if (password !== confirmPassword) {
+    return false;
+  }
+  console.log(password, code, email)
+  try {
+    var requestOptions = {
+      method: 'POST',
+      headers: {"Content-Type": 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        verificationCode: code,
+      })
+    };
+    
+    console.log(requestOptions.body)
+    return await fetch("http://13.39.85.8/auth/resetPassword", requestOptions)
+      .then(response => true)
+      .catch(error => {
+        console.log('Error: ', error);
+      });
+  }
+  catch (error) {
+    console.log('Invalid code : ', error);
+    return false
+  }
+}
 
 export {
     logInWithEmailAndPassword,
     registerWithEmailAndPassword,
     fetchprofile,
+    resetPassword,
     logout,
     fetchMessages
-  };
+};

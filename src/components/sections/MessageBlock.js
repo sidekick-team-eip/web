@@ -13,8 +13,9 @@ import pp_1 from './../../assets/images/profile_pictures/AI_pp_6.jpeg';
 import { auth, db } from '../../firebase'
 import './../../assets/scss/speech_bubble.scss'
 
-import { socket } from '../../socket';
+import io from "socket.io-client"
 
+const socket_message = io.connect("http://13.39.85.8/chat");
 
 
 const propTypes = {
@@ -67,6 +68,8 @@ const MessageBlock = ({
   const [Text, setText] = useState('');
   const [Input, setInput] = useState('');
 
+  const [message, setMessage] = useState("");
+  const [messageReceived, setMessageReceived] = useState("");
   const Sidekick_name = localStorage.getItem("sidekick_name")
   const last_seen = "1 day"
   const [message_html, setMessage_html] = useState(fill_message_array(JSON.parse(localStorage.getItem(("messages"))).messages));
@@ -90,6 +93,16 @@ const MessageBlock = ({
     setInput(Input + '    ' + Text);
   };
 
+  const sendMessage = () => {
+    socket_message.emit("send_message", { message });
+  };
+
+  useEffect(() => {
+    socket_message.on("receive_message", (data) => {
+      setMessageReceived(data.message);
+    });
+  }, [socket_message]);
+
   function fill_message_array (messages_array) {
     var new_message_html = [];
     for (let i = 0; i < messages_array.length; i++) {
@@ -105,13 +118,6 @@ const MessageBlock = ({
     }
     return(new_message_html);
   }
-  
-  // const handleSubmitMesssage = () => {
-  //   var new_message_html = [...message_html];
-  //   new_message_html.push(<div className='speech-bubble-two'><p key={100} style={{textAlign:'right'}}>{Text}</p></div>)
-  //   setMessage_html(new_message_html);
-  //   localStorage.setItem("messages".messages, JSON.parse(new_message_html))
-  // }
 
   return (
     <>
@@ -147,17 +153,25 @@ const MessageBlock = ({
         <div className={innerClasses}>
 
                 <div className="Main">
-                    <form onSubmit={showMes}>
-                        <input
+                <input
+                  style={{borderRadius: '8px', fontSize: '0.9rem', width:'20rem', height:'2rem', marginRight: '1rem'}}
+                  placeholder="Message..."
+                  onChange={(event) => {
+                    setMessage(event.target.value);
+                  }}
+                />
+                <button onClick={sendMessage}> Send Message</button>
+                <form onSubmit={showMes}>
+                    <input
                         style={{borderRadius: '8px', fontSize: '0.9rem', width:'20rem', height:'2rem', marginRight: '1rem'}}
                         type="text"
                         className="CurrencyName"
                         value={Text}
                         onChange={e => setText(e.target.value)}
-                        />
-                        <button className="button button-primary button-wide-mobile button-sm" style={{ marginLeft: '5px' }} type="submit"> Send ! </button>
-                    </form>
-                    
+                    />
+                    <button className="button button-primary button-wide-mobile button-sm" style={{ marginLeft: '5px' }} type="submit"> Send ! </button>
+                </form>
+                { messageReceived }
                 </div>
         </div>
     </div>

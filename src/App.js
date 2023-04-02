@@ -12,6 +12,7 @@ import Home from './views/Home';
 import Signup from './views/Signup';
 import Login from './views/Login'
 import Chatbot from './views/Chatbot'
+import ResetPassword from './views/Reset-password';
 import Profile from './views/Profile'
 import Message from './views/Message'
 
@@ -45,6 +46,7 @@ const App = () => {
           <AppRoute exact path="/signup" component={Signup} layout={LayoutDefault} />
           <AppRoute exact path="/profile" component={Profile} layout={LayoutDefault} />
           <AppRoute exact path="/message" component={Message} layout={LayoutDefault} />
+          <AppRoute exact path="/reset-password" component={ResetPassword} layout={LayoutDefault} />
         </Switch>
         
       )} />
