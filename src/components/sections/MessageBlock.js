@@ -15,8 +15,10 @@ import './../../assets/scss/speech_bubble.scss'
 
 import io from "socket.io-client"
 
-const socket_message = io.connect("http://13.39.85.8/chat");
-
+const socket_message = io("13.39.85.8", {
+  auth: {
+    token: localStorage.getItem('userId')
+  }})
 
 const propTypes = {
   ...SectionProps.types
@@ -91,6 +93,7 @@ const MessageBlock = ({
   const showMes = e => {
     e.preventDefault();
     setInput(Input + '    ' + Text);
+    sendMessage();
   };
 
   const sendMessage = () => {
@@ -153,25 +156,20 @@ const MessageBlock = ({
         <div className={innerClasses}>
 
                 <div className="Main">
-                <input
-                  style={{borderRadius: '8px', fontSize: '0.9rem', width:'20rem', height:'2rem', marginRight: '1rem'}}
-                  placeholder="Message..."
-                  onChange={(event) => {
-                    setMessage(event.target.value);
-                  }}
-                />
-                <button onClick={sendMessage}> Send Message</button>
+                { messageReceived }
                 <form onSubmit={showMes}>
                     <input
                         style={{borderRadius: '8px', fontSize: '0.9rem', width:'20rem', height:'2rem', marginRight: '1rem'}}
                         type="text"
                         className="CurrencyName"
                         value={Text}
-                        onChange={e => setText(e.target.value)}
+                        onChange={e => {
+                          setText(e.target.value);
+                          setMessage(e.target.value);
+                        }}
                     />
                     <button className="button button-primary button-wide-mobile button-sm" style={{ marginLeft: '5px' }} type="submit"> Send ! </button>
                 </form>
-                { messageReceived }
                 </div>
         </div>
     </div>
