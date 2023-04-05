@@ -165,7 +165,7 @@ const getSidekickInfos = () => {
       redirect: 'follow'
     };
     
-    fetch("http://13.39.85.8/user_infos/getSidekickInfos", requestOptions)
+    fetch("http://13.39.85.8/user_infos/sidekick", requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(result)

@@ -15,10 +15,6 @@ import './../../assets/scss/speech_bubble.scss'
 
 import io from "socket.io-client"
 
-const socket_message = io("13.39.85.8", {
-  auth: {
-    token: localStorage.getItem('userId')
-  }})
 
 const propTypes = {
   ...SectionProps.types
@@ -67,15 +63,20 @@ const MessageBlock = ({
   ...props
 }) => {
 
+  const socket_message = io("13.39.85.8", {
+    auth: {
+      token: localStorage.getItem('userId')
+    }
+  })  
+  
   const [Text, setText] = useState('');
   const [Input, setInput] = useState('');
-
   const [message, setMessage] = useState("");
   const [messageReceived, setMessageReceived] = useState("");
   const Sidekick_name = localStorage.getItem("sidekick_name")
   const last_seen = "1 day"
   const [message_html, setMessage_html] = useState(fill_message_array(JSON.parse(localStorage.getItem(("messages"))).messages));
-
+  
   const outerClasses = classNames(
     'hero section center-content',
     topOuterDivider && 'has-top-divider',
@@ -97,7 +98,7 @@ const MessageBlock = ({
   };
 
   const sendMessage = () => {
-    socket_message.emit("send_message", { message });
+    socket_message.emit("message", message );
   };
 
   useEffect(() => {
@@ -156,6 +157,7 @@ const MessageBlock = ({
         <div className={innerClasses}>
 
                 <div className="Main">
+                  {localStorage.getItem("userId")}
                 { messageReceived }
                 <form onSubmit={showMes}>
                     <input

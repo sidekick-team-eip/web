@@ -16,7 +16,7 @@ describe('Check the header of the message page', () => {
 
       cy.get(':nth-child(3) > .button').click()
 
-      cy.wait(2000)
+      cy.wait(2500)
       cy.reload()
       
 
@@ -24,8 +24,8 @@ describe('Check the header of the message page', () => {
       cy.get('.text-xs > :nth-child(2) > a').click()
       cy.url().should('include', '/message')
 
-      cy.contains("last seen")
-      cy.contains("last seen")
-      cy.contains("last seen")
+      cy.get('.CurrencyName')
+      .type('ceci est un message dans l input')
+      .should('have.value', 'ceci est un message dans l input')
     })
   })
