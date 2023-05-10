@@ -57,6 +57,10 @@ const Cta = ({
             <h3 className="m-0">
               Some Questions ? Try Our ChatBot !
               </h3>
+              <h6 className="m-0">
+              or
+              </h6>
+              <h6 className="m-0"> send an email at : sidekick.eip@gmail.com</h6>
           </div>
         </div>
       </div>
