@@ -46,9 +46,9 @@ const CssTextField = styled(TextField)({
 
 const useStyles = makeStyles((theme) => ({
   textfield_input: {
-      color: '#c5cae9 !important',
+    color: '#c5cae9 !important',
   }
-  
+
 }));
 
 
@@ -67,8 +67,8 @@ const MessageBlock = ({
     auth: {
       token: localStorage.getItem('userId')
     }
-  })  
-  
+  })
+
   const [Text, setText] = useState('');
   const [Input, setInput] = useState('');
   const [message, setMessage] = useState("");
@@ -76,7 +76,7 @@ const MessageBlock = ({
   const Sidekick_name = localStorage.getItem("sidekick_name")
   const last_seen = "1 day"
   const [message_html, setMessage_html] = useState(fill_message_array(JSON.parse(localStorage.getItem(("messages"))).messages));
-  
+
   const outerClasses = classNames(
     'hero section center-content',
     topOuterDivider && 'has-top-divider',
@@ -98,7 +98,7 @@ const MessageBlock = ({
   };
 
   const sendMessage = () => {
-    socket_message.emit("message", message );
+    socket_message.emit("message", message);
   };
 
   useEffect(() => {
@@ -107,76 +107,76 @@ const MessageBlock = ({
     });
   }, [socket_message]);
 
-  function fill_message_array (messages_array) {
+  function fill_message_array(messages_array) {
     var new_message_html = [];
     for (let i = 0; i < messages_array.length; i++) {
       if (messages_array[i].senderId === 1)
         new_message_html.push(
-        <div className='speech-bubble-two'><p key={i} style={{textAlign:'right'}}>{messages_array[i].content}</p></div>
+          <div className='speech-bubble-two'><p key={i} style={{ textAlign: 'right' }}>{messages_array[i].content}</p></div>
         )
       else {
         new_message_html.push(
-          <div className='speech-bubble'><p key={i} style={{textAlign:'left'}}>{messages_array[i].content}</p></div>
-          )
+          <div className='speech-bubble'><p key={i} style={{ textAlign: 'left' }}>{messages_array[i].content}</p></div>
+        )
       }
     }
-    return(new_message_html);
+    return (new_message_html);
   }
 
   return (
     <>
-    <section {...props} className={outerClasses} >
-    
-    <div className="container">
-        <div>
-            <tr>
-                <td></td>
-                <td align="left"><div><Image alt="profile_picture" width={80} height={80} className="profile_picture_main" rounded="true" src={pp_1}/></div></td>
-                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-                <td align="center"><div><h3>{Sidekick_name}</h3></div></td>
-                <td></td><td></td><td></td><td></td><td></td>
-                <td align="right"><div><p>last seen {last_seen} ago</p> </div></td>
-                <td></td>   
-            </tr>
-        </div>
-    </div>
+      <section {...props} className={outerClasses} >
 
-    <div className="container">
-        <div className={innerClasses} >
-          <div style = {{overflowY: 'auto', height: '400px'}}>
-            {message_html}
+        <div className="container">
+          <div>
+            <tr>
+              <td></td>
+              <td align="left"><div><Image alt="profile_picture" width={80} height={80} className="profile_picture_main" rounded="true" src={pp_1} /></div></td>
+              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+              <td align="center"><div><h3>{Sidekick_name}</h3></div></td>
+              <td></td><td></td><td></td><td></td><td></td>
+              <td align="right"><div><p>last seen {last_seen} ago</p> </div></td>
+              <td></td>
+            </tr>
           </div>
+        </div>
+
+        <div className="container">
+          <div className={innerClasses} >
+            <div style={{ overflowY: 'auto', height: '400px' }}>
+              {message_html}
+            </div>
             <div id="send_message_zone">
             </div>
             {Input !== '' && Input}
-            </div>
-            
-    </div>
+          </div>
 
-    <div className="container">
-        <div className={innerClasses}>
-
-                <div className="Main">
-                  {localStorage.getItem("userId")}
-                { messageReceived }
-                <form onSubmit={showMes}>
-                    <input
-                        style={{borderRadius: '8px', fontSize: '0.9rem', width:'20rem', height:'2rem', marginRight: '1rem'}}
-                        type="text"
-                        className="CurrencyName"
-                        value={Text}
-                        onChange={e => {
-                          setText(e.target.value);
-                          setMessage(e.target.value);
-                        }}
-                    />
-                    <button className="button button-primary button-wide-mobile button-sm" style={{ marginLeft: '5px' }} type="submit"> Send ! </button>
-                </form>
-                </div>
         </div>
-    </div>
-        
-    </section>
+
+        <div className="container">
+          <div className={innerClasses}>
+
+            <div className="Main">
+              {localStorage.getItem("userId")}
+              {messageReceived}
+              <form onSubmit={showMes}>
+                <input
+                  style={{ borderRadius: '8px', fontSize: '0.9rem', width: '20rem', height: '2rem', marginRight: '1rem' }}
+                  type="text"
+                  className="CurrencyName"
+                  value={Text}
+                  onChange={e => {
+                    setText(e.target.value);
+                    setMessage(e.target.value);
+                  }}
+                />
+                <button className="button button-primary button-wide-mobile button-sm" style={{ marginLeft: '5px' }} type="submit"> Send ! </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </section>
     </>
   );
 }
