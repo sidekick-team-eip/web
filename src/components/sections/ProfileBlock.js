@@ -9,6 +9,7 @@ import { auth, connectWithGoogle, db } from '../../firebase'
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
+import { editProfile } from '../../request';
 
 
 //profile pictures
@@ -83,75 +84,15 @@ const ProfileBlock = ({
   const [WeightData, setWeightData] = useState();
 
   const edit_user_profile = async () => {
-    console.log(UsernameData);
-    console.log(BioData);
-    console.log(FrequencyData);
-    console.log(WeightData);
-
-    return (null)
-    // const profile_data_2 = [];
-    // console.log("HERE i am");
-    // try {
-      
-    //   const colletionRef = collection(db, 'user_profile');
-    //   const q = query(colletionRef, where("username", "==", "pierrebittou@gmail.com"));
-    //   const querySnapshot = await getDocs(q);
-      
-    //   querySnapshot.forEach((doc) => {
-    //     profile_data_2.push(doc.data());
-    //     profile_data_2.push(doc._key.path.segments[6]);
-    //   });
-
-    //   console.log("HERE i am 5555");
-    //   console.log(profile_data_2[1]);
-
-    //   if (profile_data_2 && profile_data_2[1]) {
-    //     console.log("HERE i am v2");
-    //   const docRef = doc(db, "user_profile", profile_data_2[1]);
-    //   const data = {
-    //   username: user.email,
-    //   bio: tmpbio_data,
-    //   fun_fact: FrequencyData,
-    //   objectives: tmpobjectives_data,
-    //   favorite_sport: tmpfavorite_data
-    //   };
-    //   updateDoc(docRef, data)
-    //   .then(docRef => {
-    //   console.log("Document written with ID: ", docRef.id);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   })
-    // }
-
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    // }
+    editProfile();
+    history.push('/profile');
   }
-
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       history.push("/login");
     }
-    // if (!UsernameData){
-    //   setUsernameData(localStorage.getItem("username"));
-    // }
-    
-    // if (!BioData){
-    //   setBioData(BioData = localStorage.getItem("username"));
-    // }
-    
-    // if (!FrequencyData) {
-    //   setFrequencyData(localStorage.getItem("username"));
-    // }
-    
-    // if (!WeightData)
-    // {
-    //   setWeightData(localStorage.getItem("weight"));
-    // }
   }, [user, loading]);
-  //const [videoModalActive, setVideomodalactive] = useState(false);
 
   const outerClasses = classNames(
     'hero section center-content',
@@ -194,11 +135,10 @@ const ProfileBlock = ({
           <div>
             <input 
             className="text-sm mb-0" 
-            type="text" 
-            value={localStorage.getItem("username")}
+            type="text"
+            placeholder={localStorage.getItem("username")}
             onChange={(e) => {
-              setUsernameData(
-                  e.target.value)
+              localStorage.setItem('username', e.target.value)
             }}/>
           </div>
           <div className={tilesClasses}>
@@ -208,11 +148,10 @@ const ProfileBlock = ({
                 <div className="testimonial-item-content">
                   <input 
                   className="text-sm mb-0" 
-                  type="text" 
-                  value={localStorage.getItem("sport_frequence")}
+                  type="text"
+                  placeholder={localStorage.getItem("sport_frequence")}
                   onChange={(e) => {
-                    setFrequencyData(
-                        e.target.value)
+                    localStorage.setItem('sport_frequence', e.target.value)
                   }}
                   />
                 </div>
@@ -227,11 +166,10 @@ const ProfileBlock = ({
                 <div className="testimonial-item-content">
                   <input 
                   className="text-sm mb-0" 
-                  type="text" 
-                  value={localStorage.getItem("description")}
+                  type="text"
+                  placeholder={localStorage.getItem("description")}
                   onChange={(e) => {
-                    setBioData(
-                        e.target.value)
+                    localStorage.setItem('description', e.target.value)
                   }}
                   />
                 </div>
@@ -248,11 +186,10 @@ const ProfileBlock = ({
                 <div className="testimonial-item-content">
                   <input 
                   className="text-sm mb-0" 
-                  type="text" 
-                  value={localStorage.getItem("weight")}
+                  type="text"
+                  placeholder={localStorage.getItem("weight")}
                   onChange={(e) => {
-                    setWeightData(
-                        e.target.value)
+                    localStorage.setItem('weight', e.target.value)
                   }}
                   />
                 </div>

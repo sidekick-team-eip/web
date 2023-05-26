@@ -8,11 +8,9 @@ import { makeStyles } from "@mui/styles";
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
-
 import pp_1 from './../../assets/images/profile_pictures/AI_pp_6.jpeg';
 import { auth, db } from '../../firebase'
 import './../../assets/scss/speech_bubble.scss'
-
 import io from "socket.io-client"
 
 
@@ -48,9 +46,7 @@ const useStyles = makeStyles((theme) => ({
   textfield_input: {
     color: '#c5cae9 !important',
   }
-
 }));
-
 
 const MessageBlock = ({
   className,
@@ -72,10 +68,10 @@ const MessageBlock = ({
   const [Text, setText] = useState('');
   const [Input, setInput] = useState('');
   const [message, setMessage] = useState("");
-  const [messageReceived, setMessageReceived] = useState("");
-  const Sidekick_name = localStorage.getItem("sidekick_name")
+  const [messageReceived, setMessageReceived] = useState('');
+  const Sidekick_name = localStorage.getItem("sidekick_name");
   const last_seen = "1 day"
-  const [message_html, setMessage_html] = useState(fill_message_array(JSON.parse(localStorage.getItem(("messages"))).messages));
+  const [message_html, setMessage_html] = useState(fill_message_array(JSON.parse(localStorage.getItem(("messages")))));
 
   const outerClasses = classNames(
     'hero section center-content',
@@ -91,6 +87,14 @@ const MessageBlock = ({
     bottomDivider && 'has-bottom-divider',
   );
 
+  // const btn = document.getElementById('id_button_send');
+  // btn.addEventListener('click', function handleClick(event) {
+  //   event.preventDefault();
+  //   const MessageInput = document.getElementById('idInputField');
+  //   MessageInput.value = '';
+  // });
+  
+
   const showMes = e => {
     e.preventDefault();
     setInput(Input + '    ' + Text);
@@ -105,12 +109,13 @@ const MessageBlock = ({
     socket_message.on("receive_message", (data) => {
       setMessageReceived(data.message);
     });
+    console.log(messageReceived);
   }, [socket_message]);
 
   function fill_message_array(messages_array) {
     var new_message_html = [];
-    for (let i = 0; i < messages_array.length; i++) {
-      if (messages_array[i].senderId === 1)
+    for (let i = messages_array.length - 1; i >= 0 ; i--) {
+      if (messages_array[i].from_id === localStorage.getItem("userId"))
         new_message_html.push(
           <div className='speech-bubble-two'><p key={i} style={{ textAlign: 'right' }}>{messages_array[i].content}</p></div>
         )
@@ -161,6 +166,7 @@ const MessageBlock = ({
               {messageReceived}
               <form onSubmit={showMes}>
                 <input
+                  id="idInputField"
                   style={{ borderRadius: '8px', fontSize: '0.9rem', width: '20rem', height: '2rem', marginRight: '1rem' }}
                   type="text"
                   className="CurrencyName"
@@ -170,7 +176,7 @@ const MessageBlock = ({
                     setMessage(e.target.value);
                   }}
                 />
-                <button className="button button-primary button-wide-mobile button-sm" style={{ marginLeft: '5px' }} type="submit"> Send ! </button>
+                <button id="id_button_send" className="button button-primary button-wide-mobile button-sm" style={{ marginLeft: '5px' }} type="submit"> Send ! </button>
               </form>
             </div>
           </div>

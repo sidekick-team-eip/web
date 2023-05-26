@@ -13,9 +13,7 @@ import { auth, connectWithGoogle } from '../../firebase'
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
-
 import {logInWithEmailAndPassword, fetchprofile} from '../../request'
-
 
 
 const propTypes = {
@@ -103,8 +101,12 @@ const LoginBlock = ({
     bottomDivider && 'has-bottom-divider'
   );
 
-  const handleLoginWithEmail = () => {
-    logInWithEmailAndPassword(email, password);
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+
+  const handleLoginWithEmail = async () => {
+    logInWithEmailAndPassword(email, password)
+    await delay(3000);
+    history.push("/");
   }
 
   return (
@@ -146,14 +148,6 @@ const LoginBlock = ({
               value={password}
               onClick={handleLoginWithEmail}
                 > Connnect !</Button>
-              </div>
-              <div style={{margin:20}}>
-              <Button
-              tag="a"
-              color="mobile"
-              wideMobile
-              value={password}
-              onClick={() => connectWithGoogle()}> Connect with &nbsp;<span className="text-color-primary"> Google</span></Button>
               </div>
             </div>
           </div>

@@ -1,5 +1,3 @@
-
-
 const logInWithEmailAndPassword = async (email, password) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -69,15 +67,6 @@ const fetchprofile = async () => {
   }
 };
 
-const connectWithGoogle = () => {
-  try {
-    fetch('http://www.yourdomain.com/api/comments/id')
-      .then(response => response.json)
-  } catch (err) {
-    console.log("Error in the fetch request of the function : login with email.")
-  }
-};
-
 const registerWithEmailAndPassword = async (email, password) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -105,49 +94,56 @@ const registerWithEmailAndPassword = async (email, password) => {
   }
 };
 
-const editProfile = (usernameChange, frequecyChange, descriptionChange, weightChange) => {
+const editProfile = () => {
   var myHeaders = new Headers();
-  myHeaders.append("content-type", "application/json");
   myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
-
-  var raw = JSON.stringify({
-    "firstname": "Admin",
-    "lastname": "Super",
-    "size": "180",
-    "weight": "80",
-    "birthDate": "2001-03-10",
-    "username": "SuperAdmin",
-    "gender": "MALE",
-    "description": "AdminSuper esta enervados",
-    "sport_frequence": "NEVER"
-  });
-
+  myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  
+  var urlencoded = new URLSearchParams();
+  urlencoded.append("firstname", localStorage.getItem("firstname"));
+  urlencoded.append("lastname", localStorage.getItem("lastname"));
+  urlencoded.append("size", localStorage.getItem("size"));
+  urlencoded.append("gender", localStorage.getItem("gender"));
+  urlencoded.append("sports", "{\"football\": \"3h\", \"tennis\": \"10h\"}");
+  urlencoded.append("goal", "Manger plus pour prendre de la masse");
+  //edit profile 
+  urlencoded.append("sport_frequence", localStorage.getItem("sport_frequence"));
+  urlencoded.append("description", localStorage.getItem("description"));
+  urlencoded.append("weight", localStorage.getItem("weight"));
+  urlencoded.append("username", localStorage.getItem("username"));
+  
   var requestOptions = {
-    method: 'POST',
+    method: 'PUT',
     headers: myHeaders,
-    body: raw,
+    body: urlencoded,
     redirect: 'follow'
   };
-
-  fetch("http://13.39.85.8/user_infos/", requestOptions)
+  
+  fetch("http://13.39.85.8/user_infos/update", requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
 }
 
 const fetchMessages = () => {
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
+
   var requestOptions = {
     method: 'GET',
+    headers: myHeaders,
     redirect: 'follow'
   };
+
   try {
-    fetch("http://13.39.85.8/messages/getMessages", requestOptions)
-      .then(response => response.text())
-      .then(result => {
+  fetch("http://13.39.85.8/chat/all", requestOptions)
+    .then(response => response.text())
+    .then(result => {
         console.log("RESULT set localstorage", JSON.parse(result));
         localStorage.setItem("messages", JSON.stringify(JSON.parse(result)));
       })
-  }
+    }
   catch (error) {
     console.log('fetch messages error : ', error);
   }
@@ -218,5 +214,6 @@ export {
   fetchprofile,
   resetPassword,
   logout,
-  fetchMessages
+  fetchMessages,
+  editProfile,
 };
