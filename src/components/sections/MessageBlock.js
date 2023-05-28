@@ -68,7 +68,9 @@ const MessageBlock = ({
   const [Text, setText] = useState('');
   const [Input, setInput] = useState('');
   const [message, setMessage] = useState("");
-  const [messageReceived, setMessageReceived] = useState('');
+
+  const [messageReceived, setMessageReceived] = useState([]);
+
   const Sidekick_name = localStorage.getItem("sidekick_name");
   const last_seen = "1 day"
   const [message_html, setMessage_html] = useState(fill_message_array(JSON.parse(localStorage.getItem(("messages")))));
@@ -97,8 +99,8 @@ const MessageBlock = ({
 
   const showMes = e => {
     e.preventDefault();
-    setInput(Input + '    ' + Text);
     sendMessage();
+    setText('');
   };
 
   const sendMessage = () => {
@@ -106,15 +108,15 @@ const MessageBlock = ({
   };
 
   useEffect(() => {
-    socket_message.on("receive_message", (data) => {
-      setMessageReceived(data.message);
+    socket_message.on('message', (data) => {
+      setMessageReceived((prevMessages) => [...prevMessages, data]);
+      console.log(data);
     });
-    console.log(messageReceived);
-  }, [socket_message]);
+  }, []);
 
   function fill_message_array(messages_array) {
     var new_message_html = [];
-    for (let i = messages_array.length - 1; i >= 0 ; i--) {
+    for (let i = 0; i < messages_array.length; i++) {
       if (messages_array[i].from_id === localStorage.getItem("userId"))
         new_message_html.push(
           <div className='speech-bubble-two'><p key={i} style={{ textAlign: 'right' }}>{messages_array[i].content}</p></div>
@@ -152,6 +154,11 @@ const MessageBlock = ({
               {message_html}
             </div>
             <div id="send_message_zone">
+            <ul>
+                  {messageReceived.map((message, index) => (
+                  <li key={index}>{message}</li>
+                    ))}
+               </ul>
             </div>
             {Input !== '' && Input}
           </div>
@@ -160,10 +167,7 @@ const MessageBlock = ({
 
         <div className="container">
           <div className={innerClasses}>
-
             <div className="Main">
-              {localStorage.getItem("userId")}
-              {messageReceived}
               <form onSubmit={showMes}>
                 <input
                   id="idInputField"
