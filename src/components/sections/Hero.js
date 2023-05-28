@@ -51,6 +51,17 @@ const Hero = ({
     topDivider && 'has-top-divider',
     bottomDivider && 'has-bottom-divider'
   );
+  
+  const handleDownload = () => {
+    const fileURL = '/dummyAPK.txt';
+
+    const link = document.createElement('a');
+    link.href = fileURL;
+    link.setAttribute('download', 'dummyAPK.txt');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <section
@@ -69,10 +80,10 @@ const Hero = ({
               <p className="m-0 mb-32 reveal-from-bottom" data-reveal-delay="400">With us find your sidekick for your sport adventure!</p>
               <div className="reveal-from-bottom" data-reveal-delay="600">
                 <ButtonGroup>
-                  <Button tag="a" color="mobile" wideMobile href="https://apps.apple.com/us/app/apple-store/id375380948">
+                  <Button onClick={handleDownload} tag="a" color="mobile" wideMobile href="https://apps.apple.com/us/app/apple-store/id375380948">
                     Get for IOS
                     </Button>
-                  <Button tag="a" color="mobile" wideMobile href="https://play.google.com/store/games">
+                  <Button onClick={handleDownload} tag="a" color="mobile" wideMobile href="https://play.google.com/store/games">
                     Get for Android
                     </Button>
                 </ButtonGroup>
