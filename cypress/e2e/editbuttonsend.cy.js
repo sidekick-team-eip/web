@@ -27,6 +27,13 @@ describe('E2E Test', () => {
       cy.get(':nth-child(2) > .text-sm')
         .type('Your input value')
         .should('have.value', 'Your input value');
-
+  
+      // Click the button
+      cy.get(':nth-child(2) > .button')
+        .click();
+    
+        cy.get(':nth-child(2) > .text-sm')
+        .should('have.attr', 'placeholder', 'Your input value');
+  
     });
   });

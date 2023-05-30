@@ -20,13 +20,13 @@ describe('E2E Test', () => {
   
       cy.contains('Profile').click()
       // Check the value of a placeholder
-      cy.get(':nth-child(2) > .text-sm')
-        .should('have.attr', 'placeholder', 'Boyd_Herzog');
+      cy.get(':nth-child(3) > .tiles-item-inner > .testimonial-item-content > .text-sm')
+        .should('have.attr', 'placeholder', '64');
       
       // Fill the input field
-      cy.get(':nth-child(2) > .text-sm')
-        .type('Your input value')
-        .should('have.value', 'Your input value');
-
+      cy.get(':nth-child(3) > .tiles-item-inner > .testimonial-item-content > .text-sm')
+        .type('89')
+        .should('have.value', '89');
+  
     });
   });
