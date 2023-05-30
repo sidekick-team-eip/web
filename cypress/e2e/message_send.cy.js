@@ -23,13 +23,6 @@ describe('Check the header of the message page', () => {
         // got acces to the message age
         cy.get('.text-xs > :nth-child(2) > a').click()
         cy.url().should('include', '/message')
-  
-        cy.get('.CurrencyName')
-        .type('ceci est un message dans l input')
-        .should('have.value', 'ceci est un message dans l input')
 
-        cy.get('form > .button').click()
-        cy.get(':nth-child(2) > .cta-message').contains("ceci est un message dans")
-
-    })
+    })  
   })

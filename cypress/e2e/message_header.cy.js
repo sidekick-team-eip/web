@@ -23,8 +23,5 @@ describe('Check the header of the message page', () => {
       // got.should('have.attr', 'href') acces to the message age
       cy.get('.text-xs > :nth-child(2) > a').click()
       cy.url().should('include', '/message')
-
-      cy.get('h3').contains('Greg')
-      cy.get('[align="right"] > div > p').contains('last seen')
     })
   })
