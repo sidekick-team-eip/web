@@ -13,7 +13,6 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
 import {logInWithEmailAndPassword} from '../../request'
 
-
 const propTypes = {
   ...SectionProps.types
 }
@@ -99,7 +98,14 @@ const LoginBlock = ({
   const handleLoginWithEmail = async () => {
     logInWithEmailAndPassword(email, password)
     await delay(3000);
-    history.push("/");
+    if (localStorage.getItem("token") === null || localStorage.getItem("token") === undefined) {
+      history.push("/");
+    }
+    else {
+      localStorage.clear();
+      window.location.reload();
+      alert("Wrong user or password");
+    }
   }
 
   return (
