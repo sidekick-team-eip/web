@@ -98,10 +98,9 @@ const LoginBlock = ({
   const handleLoginWithEmail = async () => {
     logInWithEmailAndPassword(email, password)
     await delay(3000);
-    if (localStorage.getItem("token") === null || localStorage.getItem("token") === undefined) {
+    if (localStorage.getItem("token") !== "undefined" && localStorage.getItem(null)) {
       history.push("/");
-    }
-    else {
+    } else {
       localStorage.clear();
       window.location.reload();
       alert("Wrong user or password");
