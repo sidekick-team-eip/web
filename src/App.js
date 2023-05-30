@@ -11,7 +11,6 @@ import LayoutDefault from './layouts/LayoutDefault';
 import Home from './views/Home';
 import Signup from './views/Signup';
 import Login from './views/Login'
-import Chatbot from './views/Chatbot'
 import ResetPassword from './views/Reset-password';
 import Profile from './views/Profile'
 import Message from './views/Message'

@@ -5,26 +5,13 @@ import Image from '../elements/Image';
 import TextField from '@mui/material/TextField';
 import { alpha, styled } from '@mui/material/styles'
 import { makeStyles } from "@mui/styles";
-import { auth, connectWithGoogle, db } from '../../firebase'
 import React, { useState, useEffect, Fragment, useContext } from 'react';
-import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
 import { editProfile } from '../../request';
 
 
 //profile pictures
 import pp_1 from './../../assets/images/profile_pictures/AI_pp_1.jpeg';
-
-// firebase firestore.
-import {
-  doc,
-  updateDoc,
-  addDoc,
-  collection,
-  getDocs,
-  query,
-  where,
-} from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -74,7 +61,6 @@ const ProfileBlock = ({
   ...props
 }) => {
 
-  const [user, error] = useAuthState(auth);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
@@ -92,7 +78,7 @@ const ProfileBlock = ({
     if (!localStorage.getItem("token")) {
       history.push("/login");
     }
-  }, [user, loading]);
+  }, [loading]);
 
   const outerClasses = classNames(
     'hero section center-content',

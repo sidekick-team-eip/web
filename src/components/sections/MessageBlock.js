@@ -6,10 +6,8 @@ import TextField from '@mui/material/TextField';
 import { alpha, styled } from '@mui/material/styles'
 import { makeStyles } from "@mui/styles";
 import React, { useState, useEffect, Fragment, useContext } from 'react';
-import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
 import pp_1 from './../../assets/images/profile_pictures/AI_pp_6.jpeg';
-import { auth, db } from '../../firebase'
 import './../../assets/scss/speech_bubble.scss'
 import io from "socket.io-client"
 

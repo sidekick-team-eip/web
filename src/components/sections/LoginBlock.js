@@ -1,19 +1,17 @@
 import classNames from 'classnames';
-import { SectionTilesProps } from '../../utils/SectionProps';
-import SectionHeader from './partials/SectionHeader';
+// import { SectionTilesProps } from '../../utils/SectionProps';
+// import SectionHeader from './partials/SectionHeader';
 import { SectionProps } from '../../utils/SectionProps';
-import ButtonGroup from '../elements/ButtonGroup';
+// import ButtonGroup from '../elements/ButtonGroup';
 import Button from '../elements/Button';
-import Image from '../elements/Image';
-import Modal from '../elements/Modal';
+// import Image from '../elements/Image';
+// import Modal from '../elements/Modal';
 import TextField from '@mui/material/TextField';
-import { alpha, styled } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import { makeStyles } from "@mui/styles";
-import { auth, connectWithGoogle } from '../../firebase'
 import React, { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
-import {logInWithEmailAndPassword, fetchprofile} from '../../request'
+import { useHistory } from 'react-router-dom';
+import {logInWithEmailAndPassword} from '../../request'
 
 
 const propTypes = {
@@ -62,18 +60,13 @@ const LoginBlock = ({
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
   const history = useHistory();
   
   useEffect(() => {
     if (localStorage.getItem("token")) {
       history.push("/");
     }
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
-    }
-  }, [user, loading]);
+  }, []);
   const [videoModalActive, setVideomodalactive] = useState(false);
 
   const openModal = (e) => {

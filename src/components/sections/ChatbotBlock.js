@@ -1,10 +1,10 @@
-import classNames from 'classnames';
-import { SectionProps } from '../../utils/SectionProps';
-import TextField from '@mui/material/TextField';
-import { alpha, styled } from '@mui/material/styles'
-import { makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
-import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
+// import classNames from 'classnames';
+// import { SectionProps } from '../../utils/SectionProps';
+// import TextField from '@mui/material/TextField';
+// import { alpha, styled } from '@mui/material/styles'
+// import { makeStyles } from "@mui/styles";
+import React from "react";
+// import { Link, useHistory, useNavigate, redirect } from 'react-router-dom';
 
 //import Chatbot from 'react-chatbot-kit'
 //import config from "../../../src/chatbot/ChatbotConfig.js";

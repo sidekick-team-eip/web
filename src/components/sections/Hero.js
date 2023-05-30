@@ -53,11 +53,11 @@ const Hero = ({
   );
   
   const handleDownload = () => {
-    const fileURL = '/dummyAPK.txt';
+    const fileURL = '/app-release.apk';
 
     const link = document.createElement('a');
     link.href = fileURL;
-    link.setAttribute('download', 'dummyAPK.txt');
+    link.setAttribute('download', 'app-release.apk');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

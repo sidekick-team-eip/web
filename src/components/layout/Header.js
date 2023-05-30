@@ -3,13 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import Logo from './partials/Logo';
-//import { getAuth, onAuthStateChanged } from "firebase/auth"
 
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import { auth, db } from "../../firebase";
 import { logout } from "../../request";
-import { query, collection, getDocs, where } from "firebase/firestore";
 
 
 const propTypes = {
@@ -39,19 +35,7 @@ const Header = ({
 }) => {
 
 
-  const [user, loading, error] = useAuthState(auth);
   const [name, setName] = useState("");
-  
-  const fetchUserName = async () => {
-    try {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const doc = await getDocs(q);
-      const data = doc.docs[0].data();
-      setName(data.name);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const [isActive, setIsactive] = useState(false);
   const nav = useRef(null);
@@ -61,9 +45,7 @@ const Header = ({
     isActive && openMenu(); 
     document.addEventListener('keydown', keyPress);
     document.addEventListener('click', clickOutside);
-    if (!user) return;
-    fetchUserName();
-  }, [user, loading]);  
+  }, []);  
 
   const openMenu = () => {
     document.body.classList.add('off-nav-is-active');
