@@ -1,7 +1,6 @@
 const logInWithEmailAndPassword = async (email, password) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  myHeaders.append("Access-Control-Allow-Origin", "https://sidekick-team.vercel.app")
 
   var urlencoded = new URLSearchParams();
   urlencoded.append("email", email);

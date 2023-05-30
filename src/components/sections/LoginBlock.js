@@ -98,7 +98,7 @@ const LoginBlock = ({
   const handleLoginWithEmail = async () => {
     logInWithEmailAndPassword(email, password)
     await delay(3000);
-    if (localStorage.getItem("token") !== "undefined" && localStorage.getItem(null)) {
+    if (localStorage.getItem("token") !== "undefined") {
       history.push("/");
     } else {
       localStorage.clear();
