@@ -10,6 +10,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+import {fillProfileInfos} from '../../request'
+
 
 import {registerWithEmailAndPassword} from '../../request'
 
@@ -74,18 +76,23 @@ const SignupBlock = ({
   }, [user, loading]);
   const [videoModalActive, setVideomodalactive] = useState(false);
 
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+
   const register = async () => {
     if (!name) alert("Please enter name");
     registerWithEmailAndPassword(email, password);
-    try {
-      await axios.post('http://localhost:5000' + '/user/mail', {
-        email,
-        name,
-      })
-    }
-    catch (err)
-    {console.log(err);}
-    ;
+    await delay(3000);
+    fillProfileInfos();
+    await delay(3000);
+    history.push("/");
+    // try {
+    //   await axios.post('http://localhost:5000' + '/user/mail', {
+    //     email,
+    //     name,
+    //   })
+    // }
+    // catch (err)
+    // {console.log(err);};
   }
 
   const registerWithGoogleFunction = async () => {
@@ -169,14 +176,14 @@ const SignupBlock = ({
               onClick={() => register()}> Create your account</Button>
               </div>
 
-              <div style={{margin:20}}>
+              {/* <div style={{margin:20}}>
               <Button
               tag="a"
               color="mobile"
               wideMobile
               value={password}
               onClick={() => connectWithGoogle()}> Sign up with Google</Button>
-              </div>
+              </div> */}
 
               <div style={{margin:20}} >
                 Already have an account? <span href="/" className="text-color-primary">Log in now.</span>

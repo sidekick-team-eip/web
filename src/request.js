@@ -98,7 +98,7 @@ const editProfile = () => {
   var myHeaders = new Headers();
   myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  
+
   var urlencoded = new URLSearchParams();
   urlencoded.append("firstname", localStorage.getItem("firstname"));
   urlencoded.append("lastname", localStorage.getItem("lastname"));
@@ -111,14 +111,14 @@ const editProfile = () => {
   urlencoded.append("description", localStorage.getItem("description"));
   urlencoded.append("weight", localStorage.getItem("weight"));
   urlencoded.append("username", localStorage.getItem("username"));
-  
+
   var requestOptions = {
     method: 'PUT',
     headers: myHeaders,
     body: urlencoded,
     redirect: 'follow'
   };
-  
+
   fetch("http://13.39.85.8/user_infos/update", requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
@@ -137,13 +137,13 @@ const fetchMessages = () => {
   };
 
   try {
-  fetch("http://13.39.85.8/chat/all", requestOptions)
-    .then(response => response.text())
-    .then(result => {
+    fetch("http://13.39.85.8/chat/all", requestOptions)
+      .then(response => response.text())
+      .then(result => {
         console.log("RESULT set localstorage", JSON.parse(result));
         localStorage.setItem("messages", JSON.stringify(JSON.parse(result)));
       })
-    }
+  }
   catch (error) {
     console.log('fetch messages error : ', error);
   }
@@ -208,6 +208,37 @@ const resetPassword = async (email, password, confirmPassword, code) => {
   }
 }
 
+const fillProfileInfos = () => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", "Bearer "  + localStorage.getItem("token"));
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "userId": "dummy_user_id" + localStorage.getItem("email"),
+    "firstname": "mister",
+    "lastname": "mistery",
+    "username": "mistermistery",
+    "size": 175,
+    "birthDate" : "2001-07-03",
+    "weight": 75,
+    "gender": "MALE",
+    "description": "I'm someone really secretive",
+    "sport_frequence": "MORE_THEN_FIVE_A_WEEK"
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
+
+  fetch("http://13.39.85.8/form/save", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+}
+
 export {
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
@@ -216,4 +247,5 @@ export {
   logout,
   fetchMessages,
   editProfile,
+  fillProfileInfos
 };
